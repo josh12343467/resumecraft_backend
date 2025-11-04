@@ -12,14 +12,27 @@ const fs = require('fs');               // <-- MOVED IMPORT
 const cors = require('cors');
 
 
+// --- CORS Configuration ---
+const allowedOrigins = [
+  'http://localhost:5173',                      // For your local testing
+  'https://resumecraft-frontend.vercel.app'     // <-- ADD YOUR REAL VERCEL URL HERE
+  // Make sure to replace the Vercel URL with the one Vercel gave you!
+];
+
 const corsOptions = {
-    // This explicitly tells your server to ONLY trust requests coming from your React app's URL.
-    // NOTE: This must match the URL in your browser exactly.
-    origin: 'http://localhost:5173', 
+    origin: function (origin, callback) {
+      // Check if the incoming origin is in our allowed list
+      if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+        // !origin allows requests with no origin (like Postman)
+        callback(null, true);
+      } else {
+        callback(new Error('This origin is not allowed by CORS'));
+      }
+    },
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true, // Allows cookies/authorization headers to be sent
+    credentials: true,
     optionsSuccessStatus: 204
-}
+};
 
 // --- 3. CREATE INSTANCES OF YOUR TOOLS ---
 const app = express();
