@@ -1,0 +1,83 @@
+// This tells Prisma how to connect to your PostgreSQL database.
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL") // This loads from your .env file
+}
+
+// This tells Prisma to create JavaScript code for you.
+generator client {
+  provider = "prisma-client-js"
+}
+
+// --- YOUR DATABASE TABLES ---
+
+model User {
+  id            Int       @id @default(autoincrement())
+  email         String    @unique
+  password_hash String
+
+  // --- This creates the 1-to-Many relationships ---
+  personalDetails PersonalDetails?
+  experiences   Experience[]
+  education     Education[]
+  projects      Project[]
+  skills        Skill[]
+}
+
+model PersonalDetails {
+  id        Int     @id @default(autoincrement())
+  full_name     String?
+  phone     String?
+  linkedin_url String?
+  portfolio_url String?
+  
+
+  // This is the link back to the User
+  user   User @relation(fields: [userId], references: [id])
+  userId Int  @unique // A user can only have ONE personal details entry
+}
+
+model Experience {
+  id        Int     @id @default(autoincrement())
+  job_title String
+  company   String
+  start_date String?
+  end_date  String?
+  description String?
+
+  // This is the link back to the User
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+}
+
+model Education {
+  id     Int    @id @default(autoincrement())
+  school String
+  degree String
+  end_date String?
+
+  // This is the link back to the User
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+}
+
+model Project {
+  id           Int     @id @default(autoincrement())
+  project_name String
+  description  String?
+  link         String?
+
+  // This is the link back to the User
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+}
+
+model Skill {
+  id         Int    @id @default(autoincrement())
+  skill_name String
+  category   String // e.g., "Language", "Framework", "Tool"
+
+  // This is the link back to the User
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+}

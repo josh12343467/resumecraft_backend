@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; line-height: 1.6; }
+        .container { width: 80%; margin: 20px auto; }
+        h1 { color: #333; }
+        h2 { border-bottom: 2px solid #eee; padding-bottom: 5px; color: #555; }
+        .section { margin-bottom: 15px; }
+        .job h3, .project h3, .edu h3 { margin: 0; }
+        .job p, .project p, .edu p { margin: 0; }
+        .skills { display: flex; flex-wrap: wrap; }
+        .skill { background: #eee; padding: 5px 10px; border-radius: 5px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{full_name}}</h1>
+        <p>{{phone}} | {{email}} | {{linkedin_url}}</p>
+
+        <h2>Work Experience</h2>
+        <div class="section">
+            {{experiences}} </div>
+
+        <h2>Projects</h2>
+        <div class="section">
+            {{projects}} </div>
+
+        <h2>Education</h2>
+        <div class="section">
+            {{education}} </div>
+
+        <h2>Skills</h2>
+        <div class="skills">
+            {{skills}} </div>
+    </div>
+</body>
+</html>
