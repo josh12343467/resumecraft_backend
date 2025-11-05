@@ -20,15 +20,7 @@ const allowedOrigins = [
 ];
 
 const corsOptions = {
-    origin: function (origin, callback) {
-      // Check if the incoming origin is in our allowed list
-      if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-        // !origin allows requests with no origin (like Postman)
-        callback(null, true);
-      } else {
-        callback(new Error('This origin is not allowed by CORS'));
-      }
-    },
+    origin: allowedOrigins, // <-- THIS IS THE FIX. We just pass the array.
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     optionsSuccessStatus: 204
@@ -291,7 +283,13 @@ app.get('/api/resume/generate', authenticateToken, async (req, res) => {
     html = html.replace('{{skills}}', skillsHtml);
 
     // 5. Launch the "invisible browser" and create the PDF
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      headless: "new",
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox'
+      ]
+    });
     const page = await browser.newPage();
     
     await page.setContent(html, { waitUntil: 'domcontentloaded' });
