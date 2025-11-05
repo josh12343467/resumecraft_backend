@@ -15,7 +15,7 @@ const cors = require('cors');
 // --- CORS Configuration ---
 const allowedOrigins = [
   'http://localhost:5173',                      // For your local testing
-  'https://jb-resume-generator.vercel.app/'     // <-- ADD YOUR REAL VERCEL URL HERE
+  'https://jb-resume-generator.vercel.app'     // <-- ADD YOUR REAL VERCEL URL HERE
   // Make sure to replace the Vercel URL with the one Vercel gave you!
 ];
 
