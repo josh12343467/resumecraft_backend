@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: resumecraft-backend
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: "npm install"
+    startCommand: "node server.js"
+    buildpacks:
+      - url: https://github.com/buildpacks/google-chrome
