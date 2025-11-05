@@ -1,3 +1,5 @@
+const path = require('path');
+
 require('dotenv').config(); // --- 1. LOAD .env FILE (MUST BE FIRST)
 
 console.log('My DATABASE_URL is:', process.env.DATABASE_URL); // For testing
@@ -232,7 +234,8 @@ app.get('/api/resume/generate', authenticateToken, async (req, res) => {
     });
 
     // 2. Read your HTML template file
-    let html = fs.readFileSync('template.html', 'utf-8');
+    const templatePath = path.join(__dirname, 'template.html');
+let html = fs.readFileSync(templatePath, 'utf-8');
 
     // 3. Replace simple placeholders
     const details = resumeData.personalDetails;
